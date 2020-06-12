@@ -6,7 +6,7 @@
 #  address          :string
 #  client_name      :string
 #  delivery_service :string
-#  line_items       :jsonb
+#  line_items       :jsonb            is an Array
 #  reference        :string
 #  status           :string
 #  total_value      :float
