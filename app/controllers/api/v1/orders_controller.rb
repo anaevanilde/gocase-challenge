@@ -4,7 +4,7 @@ class Api::V1::OrdersController < ApplicationController
   def create
     @order = Order.create(order_params)
     if @order.persisted?
-      render_success
+      render json: { reference: @order.reference}, status: :ok
     else
       render json: @order.errors.as_json, status: :bad_request
     end

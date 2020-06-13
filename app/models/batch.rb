@@ -9,9 +9,11 @@
 #  updated_at       :datetime         not null
 #
 class Batch < ApplicationRecord
-  has_many :orders
-  after_create :associate_orders
+  include Referenceable
 
+  has_many :orders
+
+  after_create :associate_orders
 
   private
     def associate_orders
@@ -23,4 +25,5 @@ class Batch < ApplicationRecord
       errors.add(:purchase_channel, message: "can't find orders to create a batch")
       raise ActiveRecord::Rollback and return false
     end
+
 end

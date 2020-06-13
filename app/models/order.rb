@@ -24,7 +24,10 @@
 #  fk_rails_...  (batch_id => batches.id)
 #
 class Order < ApplicationRecord
+  include Referenceable
+
   belongs_to :batch, optional: true
+
   validates_presence_of :address, :client_name, :delivery_service, :line_items,
                         :purchase_channel, :delivery_service, :total_value
 
