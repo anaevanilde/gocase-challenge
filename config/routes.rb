@@ -7,6 +7,8 @@ Rails.application.routes.draw do
           get :get_status
         end
       end
+
+      resources :batches, only: [:create]
     end
   end
 

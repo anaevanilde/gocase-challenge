@@ -2,7 +2,7 @@ class Api::V1::OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    byebug
+    @order = Order.create(order_params)
     if Order.create(order_params)
       render_success
     else
