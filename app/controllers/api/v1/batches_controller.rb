@@ -10,6 +10,11 @@ class Api::V1::BatchesController < ApplicationController
     end
   end
 
+  def produce
+    orders_affected = Batch.find(params[:id]).orders.update_all(status: 'closing')
+    render json: {orders_affected: orders_affected}
+  end
+
   private
     def batch_params
        params.require(:batch).permit(:purchase_channel)

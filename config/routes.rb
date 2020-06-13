@@ -8,7 +8,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :batches, only: [:create]
+      resources :batches, only: [:create] do
+        collection do
+          post :produce
+        end
+      end
     end
   end
 

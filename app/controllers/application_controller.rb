@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
     render json: { message: 'Record not found' }, status: 404
   end
 
+  rescue_from ArgumentError do |e|
+    render json: { message: e.message }, status: 400
+  end
+
   def render_success
     render json: { success: true }, status: 200
   end
