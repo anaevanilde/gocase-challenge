@@ -20,8 +20,11 @@ class Api::V1::OrdersController < ApplicationController
                      .where('lower(client_name) = ?', params[:client_name]&.downcase)
                      .order(:created_at)
                      .page(params[:page][:number])
-                     .per(1)
+                     .per(3)
     end
+
+
+    raise ActiveRecord::RecordNotFound if @orders.empty?
   end
 
   private
