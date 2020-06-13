@@ -33,8 +33,11 @@ class Api::V1::OrdersController < ApplicationController
         params[:purchase_channel]&.downcase, params[:status]
       ).order(created_at: :asc)
     else
-      @orders = Order.where('lower(purchase_channel) = ?', params[:purchase_channel]&.downcase)
-                     .order(created_at: :asc)
+      @orders = Order.get_status_attributes
+                     .where('lower(client_name) = ?', params[:client_name]&.downcase)
+                     .order(:created_at)
+                     .page(params[:page][:number])
+                     .per(3)
     end
 
     raise ActiveRecord::RecordNotFound if @orders.empty?
