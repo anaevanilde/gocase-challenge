@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
       resources :batches, only: [:create] do
         post :produce, on: :member
+        post :close_by_delivery_service, on: :member
       end
     end
   end

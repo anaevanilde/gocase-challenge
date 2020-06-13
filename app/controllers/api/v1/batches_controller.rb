@@ -15,6 +15,15 @@ class Api::V1::BatchesController < ApplicationController
     render json: {orders_affected: orders_affected}
   end
 
+  def close_by_delivery_service
+    orders_affected = Batch.find(params[:id])
+                           .orders
+                           .where('lower(delivery_service) = ?', params[:delivery_service]&.downcase)
+                           .update_all(status: 'sent')
+
+    render json: {orders_affected: orders_affected}
+  end
+
   private
     def batch_params
        params.require(:batch).permit(:purchase_channel)
