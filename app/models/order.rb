@@ -32,5 +32,5 @@ class Order < ApplicationRecord
     sent: 'sent' # On the way to the client
    }
 
-  scope :get_status_attributes, -> { select(:reference, :status, :client_name) }
+  scope :get_status_attributes, -> { select(:id, :reference, :status, :client_name) }
 end

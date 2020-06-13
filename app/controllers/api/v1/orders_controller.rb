@@ -19,6 +19,8 @@ class Api::V1::OrdersController < ApplicationController
       @orders = Order.get_status_attributes
                      .where('lower(client_name) = ?', params[:client_name]&.downcase)
                      .order(:created_at)
+                     .page(params[:page][:number])
+                     .per(1)
     end
   end
 

@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_06_01_045029) do
     t.string "delivery_service"
     t.float "total_value"
     t.string "status"
-    t.jsonb "line_items"
+    t.jsonb "line_items", array: true
     t.bigint "batch_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
