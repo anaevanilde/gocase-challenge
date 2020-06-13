@@ -9,9 +9,7 @@ Rails.application.routes.draw do
       end
 
       resources :batches, only: [:create] do
-        collection do
-          post :produce
-        end
+        post :produce, on: :member
       end
     end
   end
