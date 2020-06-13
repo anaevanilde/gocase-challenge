@@ -19,9 +19,23 @@ class Api::V1::OrdersController < ApplicationController
 
     @orders = Order.get_status_attributes
                    .where('lower(client_name) = ?', params[:client_name]&.downcase)
-                   .order(:created_at)
+                   .order(created_at: :desc)
                    .page(params[:page][:number])
                    .per(3)
+
+    raise ActiveRecord::RecordNotFound if @orders.empty?
+  end
+
+  def index
+    if params[:status].present?
+      @orders = Order.where(
+        'lower(purchase_channel) = ? AND status = ?',
+        params[:purchase_channel]&.downcase, params[:status]
+      ).order(created_at: :asc)
+    else
+      @orders = Order.where('lower(purchase_channel) = ?', params[:purchase_channel]&.downcase)
+                     .order(created_at: :asc)
+    end
 
     raise ActiveRecord::RecordNotFound if @orders.empty?
   end
@@ -31,7 +45,7 @@ class Api::V1::OrdersController < ApplicationController
     def order_params
       permitted_params = params.require(:order).permit(
         :id, :address, :client_name, :delivery_service, :reference,
-        :status, :total_value
+        :status, :total_value, :purchase_channel
       )
       permitted_params[:line_items] = params[:order][:line_items]&.to_a
 
