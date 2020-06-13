@@ -7,6 +7,7 @@
 #  client_name      :string
 #  delivery_service :string
 #  line_items       :jsonb            is an Array
+#  purchase_channel :string
 #  reference        :string
 #  status           :string
 #  total_value      :float
