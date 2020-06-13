@@ -24,4 +24,13 @@
 #
 class Order < ApplicationRecord
   belongs_to :batch, optional: true
+
+  enum status: {
+    ready: 'ready', # A new order, ready to be produced
+    production: 'production', # Waiting to be printed
+    closing:  'closing', # Already produced, waiting to be sent
+    sent: 'sent' # On the way to the client
+   }
+
+  scope :get_status_attributes, -> { select(:reference, :status, :client_name) }
 end

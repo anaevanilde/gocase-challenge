@@ -10,6 +10,18 @@ class Api::V1::OrdersController < ApplicationController
     end
   end
 
+  # Get order status by reference or client name
+  def get_status
+    if params[:reference].present?
+      @orders = Order.get_status_attributes
+                     .where(reference: params[:reference])
+    else
+      @orders = Order.get_status_attributes
+                     .where('lower(client_name) = ?', params[:client_name]&.downcase)
+                     .order(:created_at)
+    end
+  end
+
   private
 
     def order_params
