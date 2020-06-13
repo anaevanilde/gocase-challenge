@@ -3,10 +3,10 @@ class Api::V1::OrdersController < ApplicationController
 
   def create
     @order = Order.create(order_params)
-    if Order.create(order_params)
+    if @order.persisted?
       render_success
     else
-      render json: { success: false }, status: :bad_request
+      render json: @order.errors.as_json, status: :bad_request
     end
   end
 

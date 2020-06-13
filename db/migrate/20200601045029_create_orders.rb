@@ -6,7 +6,7 @@ class CreateOrders < ActiveRecord::Migration[6.0]
       t.string :address
       t.string :delivery_service
       t.float :total_value
-      t.string :status
+      t.string :status, default: 'ready'
       t.jsonb :line_items, array: true
       t.references :batch, index: true, foreign_key: true
 

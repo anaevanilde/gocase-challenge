@@ -9,7 +9,7 @@
 #  line_items       :jsonb            is an Array
 #  purchase_channel :string
 #  reference        :string
-#  status           :string
+#  status           :string           default("ready")
 #  total_value      :float
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
@@ -25,6 +25,8 @@
 #
 class Order < ApplicationRecord
   belongs_to :batch, optional: true
+  validates_presence_of :address, :client_name, :delivery_service, :line_items,
+                        :purchase_channel, :delivery_service, :total_value
 
   enum status: {
     ready: 'ready', # A new order, ready to be produced
