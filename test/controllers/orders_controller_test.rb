@@ -17,7 +17,28 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
           client_name: Faker::Name.name ,
           delivery_service: ["Sedex", "Pax"].sample,
           purchase_channel: ["Site BR", "Site USA"],
-          total_value: (Random.rand * 100).round(2)
+          total_value: (Random.rand * 100).round(2),
+          line_items_attributes:[
+            {
+              sku: "case-my-best-friend",
+              specifications: {
+                model: "iPhone X",
+                "case type": "Rose Leather"
+              }
+            },
+            {
+              sku: "powebank-sunshine",
+              specifications: {
+                capacity: "10000mah"
+              }
+            },
+            {
+              sku: "earphone-standard",
+              specifications: {
+                color: "white"
+              }
+            }
+          ]
         }
       }
 
