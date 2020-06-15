@@ -7,9 +7,4 @@ class ApplicationController < ActionController::Base
   rescue_from ArgumentError do |e|
     render json: { message: e.message }, status: 400
   end
-
-  def render_success
-    render json: { success: true }, status: 200
-  end
-
 end
