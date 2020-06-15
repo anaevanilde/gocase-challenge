@@ -6,7 +6,6 @@
 #  address          :string
 #  client_name      :string
 #  delivery_service :string
-#  line_items       :jsonb            is an Array
 #  purchase_channel :string
 #  reference        :string
 #  status           :string           default("ready")
@@ -27,6 +26,9 @@ class Order < ApplicationRecord
   include Referenceable
 
   belongs_to :batch, optional: true
+  has_many :line_items
+
+  accepts_nested_attributes_for :line_items
 
   validates_presence_of :address, :client_name, :delivery_service, :line_items,
                         :purchase_channel, :delivery_service, :total_value
