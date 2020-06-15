@@ -4,9 +4,9 @@ class Api::V1::OrdersController < ApplicationController
   def create
     @order = Order.create(order_params)
     if @order.persisted?
-      render json: { reference: @order.reference}, status: :ok
+      render json: { reference: @order.reference}, status: 201
     else
-      render json: @order.errors.as_json, status: :bad_request
+      render json: @order.errors.as_json, status: :ok
     end
   end
 
@@ -45,7 +45,7 @@ class Api::V1::OrdersController < ApplicationController
   private
 
     def order_params
-      params.require(:order).permit(
+      params.fetch(:order, {}).permit(
         :id, :address, :client_name, :delivery_service, :reference,
         :status, :total_value, :purchase_channel, line_items_attributes: [:sku, specifications: {}]
       )
