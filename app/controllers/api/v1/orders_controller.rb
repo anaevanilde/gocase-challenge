@@ -23,7 +23,6 @@ class Api::V1::OrdersController < ApplicationController
                    .page(params[:page][:number])
                    .per(3)
 
-    raise ActiveRecord::RecordNotFound if @orders.empty?
   end
 
   def index
