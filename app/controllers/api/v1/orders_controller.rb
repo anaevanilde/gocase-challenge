@@ -46,12 +46,9 @@ class Api::V1::OrdersController < ApplicationController
   private
 
     def order_params
-      permitted_params = params.require(:order).permit(
+      params.require(:order).permit(
         :id, :address, :client_name, :delivery_service, :reference,
-        :status, :total_value, :purchase_channel
+        :status, :total_value, :purchase_channel, line_items_attributes: [:sku, specifications: {}]
       )
-      permitted_params[:line_items] = params[:order][:line_items]&.to_a
-
-      permitted_params.permit!
     end
 end
