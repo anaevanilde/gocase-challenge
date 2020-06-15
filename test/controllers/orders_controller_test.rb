@@ -1,11 +1,15 @@
 class OrdersControllerTest < ActionDispatch::IntegrationTest
-  test "should get orders by reference or  client name" do
+  test "should get orders by reference or client name" do
     get get_status_api_v1_orders_path, params: { reference: "BR000005", page: { number: 1 } }
     assert_response :success
   end
 
-  test "should create order" do
+  test "should list orders by purchase_channel" do
+    get api_v1_orders_path, params: { purchase_channel: Order.first&.purchase_channel, status: Order.first&.status, page: { number: 1 } }
+    assert_response :success
+  end
 
+  test "should create order" do
     post api_v1_orders_path
       {
         order: {

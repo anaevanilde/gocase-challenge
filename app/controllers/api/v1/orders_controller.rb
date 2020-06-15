@@ -39,7 +39,6 @@ class Api::V1::OrdersController < ApplicationController
                      .per(3)
     end
 
-    raise ActiveRecord::RecordNotFound if @orders.empty?
   end
 
   private
