@@ -17,7 +17,7 @@ class Batch < ApplicationRecord
 
   private
     def associate_orders
-      included_orders = Order.where(purchase_channel: purchase_channel).update_all(batch_id: self.id)
+      included_orders = Order.where(purchase_channel: purchase_channel, batch_id: nil).update_all(batch_id: self.id)
 
       return true if included_orders > 0
 
