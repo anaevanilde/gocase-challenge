@@ -1,0 +1,8 @@
+first:
+  client_name: "John Doe"
+  status: "ready"
+  reference: "BR000001"
+  delivery_service: "Sedex"
+  purchase_channel: "Site BR"
+  address: "Random Street"
+  total_value: 100,

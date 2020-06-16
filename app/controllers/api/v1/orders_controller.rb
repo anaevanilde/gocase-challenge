@@ -4,9 +4,9 @@ class Api::V1::OrdersController < ApplicationController
   def create
     @order = Order.create(order_params)
     if @order.persisted?
-      render json: { reference: @order.reference }, status: 201
+      render json: { reference: @order.reference }, status: :created
     else
-      render json: @order.errors.as_json, status: :ok
+      render json: @order.errors.as_json, status: :bad_request
     end
   end
 
@@ -22,6 +22,8 @@ class Api::V1::OrdersController < ApplicationController
                    .order(created_at: :desc)
                    .page(params[:page][:number])
                    .per(3)
+
+    raise ActiveRecord::RecordNotFound if @orders.empty?
   end
 
   def index
@@ -37,6 +39,8 @@ class Api::V1::OrdersController < ApplicationController
                      .page(params[:page][:number])
                      .per(3)
     end
+
+    raise ActiveRecord::RecordNotFound if @orders.empty?
   end
 
   private

@@ -1,24 +1,29 @@
-class OrdersControllerTest < ActionDispatch::IntegrationTest
+require 'test_helper'
+
+class Api::V1::OrdersControllerTest < ActionDispatch::IntegrationTest
   test "should get orders by reference or client name" do
-    get get_status_api_v1_orders_path, params: { reference: "BR000005", page: { number: 1 } }
+    order = orders(:first)
+    get get_status_api_v1_orders_path, params: { reference: order.reference, page: { number: 1 } }
     assert_response :success
   end
 
   test "should list orders by purchase_channel" do
-    get api_v1_orders_path, params: { purchase_channel: Order.first&.purchase_channel, status: Order.first&.status, page: { number: 1 } }
+    order = orders(:first)
+    get api_v1_orders_path, params: { purchase_channel: order.purchase_channel, status: order.status, page: { number: 1 } }
     assert_response :success
   end
 
   test "should create order" do
-    post api_v1_orders_path
-      {
+    assert_difference('Order.count') do
+      post api_v1_orders_path,
+      params: {
         order: {
-          name: Faker::Address.street_address,
-          client_name: Faker::Name.name ,
+          client_name: Faker::Name.name,
           delivery_service: ["Sedex", "Pax"].sample,
-          purchase_channel: ["Site BR", "Site USA"],
+          purchase_channel: ["Site BR", "Site USA"].sample,
+          address: Faker::Address.street_address,
           total_value: (Random.rand * 100).round(2),
-          line_items_attributes:[
+          line_items_attributes: [
             {
               sku: "case-my-best-friend",
               specifications: {
@@ -41,7 +46,8 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
           ]
         }
       }
+    end
 
-    assert_response :success
+    assert_response :created
   end
 end

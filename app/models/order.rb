@@ -30,8 +30,8 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :line_items
 
-  validates_presence_of :address, :client_name, :delivery_service, :line_items,
-                        :purchase_channel, :delivery_service, :total_value
+  validates_presence_of :address, :client_name, :delivery_service, :purchase_channel,
+                        :delivery_service, :total_value
 
   enum status: {
     ready: 'ready', # A new order, ready to be produced
